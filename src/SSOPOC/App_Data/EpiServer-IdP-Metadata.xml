@@ -1,0 +1,43 @@
+<md:EntityDescriptor ID="r7J23mtFc_7UGDIbiOjnEf2n8ap" cacheDuration="PT1440M" entityID="SVBSIGNON:SAML2.0" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:SignedInfo>
+<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+<ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+<ds:Reference URI="#r7J23mtFc_7UGDIbiOjnEf2n8ap">
+<ds:Transforms>
+<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+</ds:Transforms>
+<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+<ds:DigestValue>GR7TCz1YisYsDP2hYTQCejmOWxDTG7BWuZFvBaJCoNU=</ds:DigestValue>
+</ds:Reference>
+</ds:SignedInfo>
+<ds:SignatureValue>
+cCa8lsFRi8DZGL2eWyUSyfr30eE+Dl0kcFgjCRLzhEOGN6gdgPBfQ0TrY0tC+PymxRi7FGTkXrmD
+TrLG9prMjFvchr9mS1zdbQ1WoOjSKS4+4l1SlA+m+55MdcYGVo0n6eQfI0Uz55JmLkeCXIBLqNib
++BQw0GDzd54O26uMS6RftY3JKS6TLqvAkVCd0brJNkgszqkm7AUKP0Fgm/fwaYmEB0jQho1K4p+Y
+knM9V7fzwrp2pwRD7cAQZFpc1y2Ye5cMnJjWe6/epKiZiH2BRkEiwSQvzZ63a90bsU9jpyQXdiDN
+dxUHLGMpSliJ1zkUuBJ9cYgK+dzCLAV06ach6w==
+</ds:SignatureValue>
+<ds:KeyInfo>
+<ds:X509Data>
+<ds:X509Certificate>
+MIIDbDCCAlSgAwIBAgIGAVI3qru8MA0GCSqGSIb3DQEBCwUAMHcxCzAJBgNVBAYTAlVTMRMwEQYD
+VQQIEwpDYWxpZm9ybmlhMRQwEgYDVQQHEwtTYW50YSBDbGFyYTEcMBoGA1UEChMTU2lsaWNvbiBW
+YWxsZXkgQmFuazELMAkGA1UECxMCSVQxEjAQBgNVBAMTCVNWQlNJR05PTjAeFw0xNjAxMTIyMTA4
+MDJaFw0yMTAxMTAyMTA4MDJaMHcxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRQw
+EgYDVQQHEwtTYW50YSBDbGFyYTEcMBoGA1UEChMTU2lsaWNvbiBWYWxsZXkgQmFuazELMAkGA1UE
+CxMCSVQxEjAQBgNVBAMTCVNWQlNJR05PTjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+AJoeAPXMF/kRWkY1vLTFSA8p1zRaJLXw+Ie1uepPBDcM5Uo3asce4wx0Ox7SvaIaIokfrFv775zf
+Iss6jdQePLwAGjaepU+bmVbxUawMK52WxwMCBVjbM/tX3R4ZSX9hg7ZTAzHZYS1ZJbwTY5J7lxls
+mE9ORAiwcZaKtSiCNn8KrxFtesl/hKilNeRMdqAgYdLBc4cQnjB/KVSu8s94+YQ1E+wM12l6szQk
+jCql/ZrWFaHJkdzXG/7t1qMV8SBaFguB5C3tXeLhJPk0G73rjcoD+ub4320wCwPFEDuWki0hOYiY
+RiDgTwajiRj4XhgQJhaWnguBLMqnqx+gSyUsxXUCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEANFJU
+XtQImDr8rylbHqnnZrd80PaUwulb/4XRxgfXaRgecv+Gold3XaMXEPBjrhnlmv8v+H1xzAy75ZnN
+WEa7io9G3+BKzxaIyhuYdFdmcBMBUacemU/JdFva+Uz+1fvrR0Z+KY90jmfqHECYqgxAE+QJB70C
+BP9OpeeYwwAjYJ4dHcBJkSVjLc9Smq+FHxiA4a+YRYv6Vfjp4zsdzhwe83a2P0JlzeHGYAVXaFim
+He694KDWOhKp79EoGWp0p7CFAPw09wHVyAUIf19N0/vhqiLUwltCFZbDp+21+SP8+9gwZqb+3BY0
+01WYQaptzqhwpJcqw7rJAxRMArWge7NUVA==
+</ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</ds:Signature><md:IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol" WantAuthnRequestsSigned="false"><md:KeyDescriptor use="signing"><ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:X509Data><ds:X509Certificate>MIIDbDCCAlSgAwIBAgIGAVI3qru8MA0GCSqGSIb3DQEBCwUAMHcxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRQwEgYDVQQHEwtTYW50YSBDbGFyYTEcMBoGA1UEChMTU2lsaWNvbiBWYWxsZXkgQmFuazELMAkGA1UECxMCSVQxEjAQBgNVBAMTCVNWQlNJR05PTjAeFw0xNjAxMTIyMTA4MDJaFw0yMTAxMTAyMTA4MDJaMHcxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRQwEgYDVQQHEwtTYW50YSBDbGFyYTEcMBoGA1UEChMTU2lsaWNvbiBWYWxsZXkgQmFuazELMAkGA1UECxMCSVQxEjAQBgNVBAMTCVNWQlNJR05PTjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJoeAPXMF/kRWkY1vLTFSA8p1zRaJLXw+Ie1uepPBDcM5Uo3asce4wx0Ox7SvaIaIokfrFv775zfIss6jdQePLwAGjaepU+bmVbxUawMK52WxwMCBVjbM/tX3R4ZSX9hg7ZTAzHZYS1ZJbwTY5J7lxlsmE9ORAiwcZaKtSiCNn8KrxFtesl/hKilNeRMdqAgYdLBc4cQnjB/KVSu8s94+YQ1E+wM12l6szQkjCql/ZrWFaHJkdzXG/7t1qMV8SBaFguB5C3tXeLhJPk0G73rjcoD+ub4320wCwPFEDuWki0hOYiYRiDgTwajiRj4XhgQJhaWnguBLMqnqx+gSyUsxXUCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEANFJUXtQImDr8rylbHqnnZrd80PaUwulb/4XRxgfXaRgecv+Gold3XaMXEPBjrhnlmv8v+H1xzAy75ZnNWEa7io9G3+BKzxaIyhuYdFdmcBMBUacemU/JdFva+Uz+1fvrR0Z+KY90jmfqHECYqgxAE+QJB70CBP9OpeeYwwAjYJ4dHcBJkSVjLc9Smq+FHxiA4a+YRYv6Vfjp4zsdzhwe83a2P0JlzeHGYAVXaFimHe694KDWOhKp79EoGWp0p7CFAPw09wHVyAUIf19N0/vhqiLUwltCFZbDp+21+SP8+9gwZqb+3BY001WYQaptzqhwpJcqw7rJAxRMArWge7NUVA==</ds:X509Certificate></ds:X509Data></ds:KeyInfo></md:KeyDescriptor><md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://svbsignon.svb.com/idp/SSO.saml2"/><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://svbsignon.svb.com/idp/SSO.saml2"/><saml:Attribute Name="roles" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"/></md:IDPSSODescriptor><md:ContactPerson contactType="administrative"/></md:EntityDescriptor>
