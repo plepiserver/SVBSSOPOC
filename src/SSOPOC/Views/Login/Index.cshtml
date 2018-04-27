@@ -1,0 +1,58 @@
+﻿@{ Layout = null; }
+@model SSOPOC.Models.ViewModels.LoginViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Log in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="stylesheet" href="/Util/styles/login.css" />
+</head>
+<body>
+    <div style="display:none;" class="login">
+
+    </div>
+    <div id="LoginControl" class="js-login-wrapper login-wrapper img3">
+        <div class="modal">
+            <table>
+                <tr>
+                    <td>
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary()
+                            <ol class="clearfix">
+                                <li>
+                                    @Html.LabelFor(x => x.Username)
+                                    @Html.TextBoxFor(x => x.Username)
+                                </li>
+                                <li>
+                                    @Html.LabelFor(x => x.Password)
+                                    @Html.PasswordFor(x => x.Password)
+                                </li>
+                                <li>
+                                    <input type="submit" value="Log in" />
+                                </li>
+                            </ol>
+                        }
+                    </td>
+                    <td valign="middle">
+                        <div style="height:250px; border-right:1px solid white;margin:0 50px 0 50px"></div>
+                    </td>
+                    <td align="center">
+                        @using (Html.BeginForm("SSOLogin", "PingOne", new { ReturnUrl = Request.QueryString["ReturnUrl"] }))
+                        {
+                            <ol class="clearfix">
+                                <li>
+                                    <input type="submit" value="Login SSO" />
+                                </li>
+                            </ol>
+                        }
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
