@@ -22,6 +22,48 @@ namespace SSOPOC.Controllers
         private UIUserManager UIUserManager => ServiceLocator.Current.GetInstance<UIUserManager>();
         private UISignInManager UISignInManager => ServiceLocator.Current.GetInstance<UISignInManager>();
 
+        private ApplicationDbContext _context;
+        public ApplicationDbContext ApplicationDbContext
+        {
+            get
+            {
+                return _context ?? HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+            }
+            private set { _context = value; }
+        }
+
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private ApplicationSignInManager _signInManager;
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set { _signInManager = value; }
+        }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+
         public ActionResult Index()
         {
             return View("/Views/Login/Index.cshtml");
@@ -38,7 +80,7 @@ namespace SSOPOC.Controllers
                 var resFromSignIn = UISignInManager.SignIn(UIUserProvider.Name, model.Username, model.Password);
                 if (resFromSignIn)
                 {
-                    return Redirect(UrlResolver.Current.GetUrl("episerver/cms"));
+                    return Redirect("/episerver/cms");
                 }
             }
             // If we got this far, something failed, redisplay form

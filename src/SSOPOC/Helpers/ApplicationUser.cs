@@ -11,6 +11,10 @@ namespace SSOPOC.Helpers
 {
     public class ApplicationUser : IdentityUser
     {
+        public bool IsApproved { get; set; }
+        public bool IsLockedOut { get; set; }
+        public DateTime CreationDate { get; set; }
+
         public ApplicationUser()
         {
         }

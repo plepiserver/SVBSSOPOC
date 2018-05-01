@@ -1,11 +1,13 @@
 ﻿using EPiServer.ServiceLocation;
 using EPiServer.Shell.Security;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SSOPOC.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -18,6 +20,16 @@ namespace SSOPOC.Controllers
         private UIUserProvider _UIUserProvider => ServiceLocator.Current.GetInstance<UIUserProvider>();
         private UISignInManager _UISignInManager => ServiceLocator.Current.GetInstance<UISignInManager>();
         private UIRoleProvider _UIRoleProvider => ServiceLocator.Current.GetInstance<UIRoleProvider>();
+
+        private ApplicationDbContext _context;
+        public ApplicationDbContext ApplicationDbContext
+        {
+            get
+            {
+                return _context ?? HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+            }
+            private set { _context = value; }
+        }
 
         private ApplicationUserManager _userManager;
         public ApplicationUserManager UserManager
@@ -70,14 +82,30 @@ namespace SSOPOC.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             // Sign in the user with this external login provider if the user already has a login
 
+            //var list = ApplicationDbContext.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            // Add role if not exist
+            //ApplicationDbContext.Roles.Add(new IdentityRole()
+            //{
+            //    Name = collection["RoleName"]
+            //});
+            //ApplicationDbContext.SaveChanges();
             var user = await UserManager.FindAsync(loginInfo.Login);
-            if (user != null)
+            if (user == null)
             {
-                user = new ApplicationUser { UserName = "tester1" };
-                var result = await UserManager.CreateAsync(user);
+                user = new ApplicationUser
+                {
+                    UserName = "tester3",
+                    Email = "tester3@abc.com",
+                    IsApproved = true,
+                    IsLockedOut = false,
+                    CreationDate = DateTime.Now
+                };
+                var errors = Enumerable.Empty<string>();
+
+                var result = await UserManager.CreateAsync(user, "Amer1canDre@m!");
                 if (result.Succeeded)
                 {
-                    await UserManager.AddToRoleAsync(user.Id, "WebAdmin");
+                    await UserManager.AddToRoleAsync(user.Id, "WebAdmins");
                     result = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
                     if (result.Succeeded)
                     {

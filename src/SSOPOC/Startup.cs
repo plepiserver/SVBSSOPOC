@@ -15,6 +15,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.WsFederation;
 using Owin;
+using SSOPOC.Helpers;
 using Sustainsys.Saml2.Owin;
 
 [assembly: OwinStartup(typeof(SSOPOC.Startup))]
@@ -27,10 +28,14 @@ namespace SSOPOC
 
         public void Configuration(IAppBuilder app)
         {
-            // Add CMS integration for ASP.NET Identity
-            app.AddCmsAspNetIdentity<ApplicationUser>();
+            app.CreatePerOwinContext(ApplicationDbContext.Create);
+            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
-            app.SetDefaultSignInAsAuthenticationType(WsFederationAuthenticationDefaults.AuthenticationType);
+            // Add CMS integration for ASP.NET Identity
+            app.AddCmsAspNetIdentity<EPiServer.Cms.UI.AspNetIdentity.ApplicationUser>();
+
+            //app.SetDefaultSignInAsAuthenticationType(WsFederationAuthenticationDefaults.AuthenticationType);
 
             // local Episerver authentication
             app.UseCookieAuthentication(new CookieAuthenticationOptions
@@ -41,9 +46,9 @@ namespace SSOPOC
                 {
                     // Enables the application to validate the security stamp when the user logs in.
                     // This is a security feature which is used when you change a password or add an external login to your account.
-                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager<ApplicationUser>, ApplicationUser>(
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, SSOPOC.Helpers.ApplicationUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
-                        regenerateIdentity: (manager, user) => manager.GenerateUserIdentityAsync(user))
+                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
             });
 

@@ -6,6 +6,7 @@ using Microsoft.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace SSOPOC.Helpers
@@ -41,6 +42,18 @@ namespace SSOPOC.Helpers
             manager.UserLockoutEnabledByDefault = true;
             manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
             manager.MaxFailedAccessAttemptsBeforeLockout = 5;
+
+            //// Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
+            //// You can write your own provider and plug it in here.
+            //manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<ApplicationUser>
+            //{
+            //    MessageFormat = "Your security code is {0}"
+            //});
+            //manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<ApplicationUser>
+            //{
+            //    Subject = "Security Code",
+            //    BodyFormat = "Your security code is {0}"
+            //});
 
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
