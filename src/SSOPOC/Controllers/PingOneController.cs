@@ -82,7 +82,7 @@ namespace SSOPOC.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             // Sign in the user with this external login provider if the user already has a login
 
-            //var list = ApplicationDbContext.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            var list = ApplicationDbContext.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             // Add role if not exist
             //ApplicationDbContext.Roles.Add(new IdentityRole()
             //{
@@ -115,26 +115,15 @@ namespace SSOPOC.Controllers
                 }
                 else
                 {
-                    var result1 = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
-                    switch (result1)
-                    {
-                        case SignInStatus.Success:
-                            return Redirect("/episerver/cms");
-                        case SignInStatus.LockedOut:
-                            return Redirect("/episerver/cms");
-                        case SignInStatus.RequiresVerification:
-                            return Redirect("/episerver/cms");
-                        case SignInStatus.Failure:
-                            return Redirect("/episerver/cms");
-                        default:
-                            return Redirect("/episerver/cms");
-                    }
-                    return Redirect("/episerver/cms");
+                    // Proceed error here
+                    return new EmptyResult();
                 }
-
-
-                return Redirect("/episerver/cms");
             }
+            else
+            {
+
+            }
+
 
             return Redirect("/episerver/cms");
         }

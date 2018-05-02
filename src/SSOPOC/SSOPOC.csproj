@@ -570,6 +570,8 @@
     <Content Include="Views\ArticlePage\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\PingOne\PingOne.cshtml" />
+    <None Include="Properties\PublishProfiles\ade1-svbf01mstrho7y3inte - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ade1-svbf01mstrho7y3inte - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\svbf01mstrho7y3inte - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\svbf01mstrho7y3inte - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
