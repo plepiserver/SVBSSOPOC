@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace SSOPOC.Controllers
 {
@@ -80,83 +81,100 @@ namespace SSOPOC.Controllers
         public async Task<ActionResult> AuthenticateCallBack()
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
-            // Sign in the user with this external login provider if the user already has a login
+            var userData = RetreiveUserDataFromClaims(loginInfo);
+            var errors = new List<string>();
 
-            var list = ApplicationDbContext.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
-            // Add role if not exist
-            //ApplicationDbContext.Roles.Add(new IdentityRole()
-            //{
-            //    Name = collection["RoleName"]
-            //});
-            //ApplicationDbContext.SaveChanges();
+            // Save roles first
+            if (userData?.Roles?.Count > 0)
+                SaveRoles(userData.Roles);
+
             var user = await UserManager.FindAsync(loginInfo.Login);
             if (user == null)
             {
                 user = new ApplicationUser
                 {
-                    UserName = "tester3",
-                    Email = "tester3@abc.com",
+                    UserName = userData.Username,
+                    Email = $"{Guid.NewGuid()}@episerver.com",
                     IsApproved = true,
                     IsLockedOut = false,
                     CreationDate = DateTime.Now
                 };
-                var errors = Enumerable.Empty<string>();
 
-                var result = await UserManager.CreateAsync(user, "Amer1canDre@m!");
-                if (result.Succeeded)
+                //var createUserResult = await UserManager.CreateAsync(user, Membership.GeneratePassword(12, 6));
+                var createUserResult = await UserManager.CreateAsync(user, "Amer1canDre@m!");
+                if (createUserResult.Succeeded)
                 {
-                    await UserManager.AddToRoleAsync(user.Id, "WebAdmins");
-                    result = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
-                    if (result.Succeeded)
+                    foreach(var role in userData.Roles)
                     {
-                        await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+                        await UserManager.AddToRoleAsync(user.Id, role);
                     }
-                    return Redirect("/episerver/cms");
+                    var result = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+                    if (!result.Succeeded)
+                    {
+                        foreach(var error in result.Errors)
+                        {
+                            errors.Add(error);
+                        }
+                    }
                 }
                 else
                 {
-                    // Proceed error here
-                    return new EmptyResult();
+                    foreach (var error in createUserResult.Errors)
+                    {
+                        errors.Add(error);
+                    }
                 }
+            }
+
+            if(errors.Count == 0)
+            {
+                await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+                return View("Success", userData);
             }
             else
             {
-
+                ViewBag.Errors = new List<string>();
+                foreach(var error in errors)
+                {
+                    ViewBag.Erros.Add(error);
+                }
+                return View("Error");
             }
-
-
-            return Redirect("/episerver/cms");
         }
 
-        internal class ChallengeResult : HttpUnauthorizedResult
+        private void SaveRoles(List<string> roles)
         {
-            private const string XsrfKey = "XsrfId";
-
-            public ChallengeResult(string provider, string redirectUri)
-                : this(provider, redirectUri, null)
+            var list = ApplicationDbContext.Roles.OrderBy(r => r.Name).ToList();
+            foreach (var role in roles)
             {
-            }
-
-            public ChallengeResult(string provider, string redirectUri, string userId)
-            {
-                LoginProvider = provider;
-                RedirectUri = redirectUri;
-                UserId = userId;
-            }
-
-            public string LoginProvider { get; set; }
-            public string RedirectUri { get; set; }
-            public string UserId { get; set; }
-
-            public override void ExecuteResult(ControllerContext context)
-            {
-                var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
-                if (UserId != null)
+                if (list.Any(x => x.Name.Equals(role, StringComparison.InvariantCultureIgnoreCase)))
+                    continue;
+                else
                 {
-                    properties.Dictionary[XsrfKey] = UserId;
+                    ApplicationDbContext.Roles.Add(new IdentityRole()
+                    {
+                        Name = role
+                    });
                 }
-                context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
+            ApplicationDbContext.SaveChanges();
+        }
+
+        private ClaimUserData RetreiveUserDataFromClaims(ExternalLoginInfo loginInfo)
+        {
+            var rolePrefix = "DELG-Episerver-";
+            var userData = new ClaimUserData();
+            userData.Username = loginInfo.Login.ProviderKey;
+            userData.Roles = new List<string>();
+            foreach (var claim in loginInfo.ExternalIdentity?.Claims)
+            {
+                if (claim.Type.ToLower() == "roles")
+                {
+                    var roleName = claim.Value.Remove(0, rolePrefix.Count());
+                    userData.Roles.Add(roleName);
+                }
+            }
+            return userData;
         }
     }
 }

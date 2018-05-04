@@ -1,0 +1,26 @@
+﻿@model ClaimUserData
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Success</title>
+</head>
+<body>
+    <div>
+        <h1>Welcome back @Model.Username!</h1>
+        <h3>Your have the following roles</h3>
+        <ol>
+            @foreach(var role in Model.Roles)
+            {
+                <li>@role</li>
+            }
+        </ol>
+        Click <a href="/episerver/cms">here</a> to go to Dashboard.
+    </div>
+</body>
+</html>

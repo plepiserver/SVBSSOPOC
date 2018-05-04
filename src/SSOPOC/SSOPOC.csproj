@@ -395,6 +395,8 @@
     <Compile Include="Helpers\ApplicationUser.cs" />
     <Compile Include="Helpers\ApplicationUserManager.cs" />
     <Compile Include="Helpers\CategorizableExtensions.cs" />
+    <Compile Include="Helpers\ChallengeResult.cs" />
+    <Compile Include="Helpers\ClaimUserData.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Helpers\PingFedSynchronizingUserService.cs" />
     <Compile Include="Helpers\UrlHelpers.cs" />
@@ -569,11 +571,12 @@
     <Content Include="Views\ContactBlock\Index.cshtml" />
     <Content Include="Views\ArticlePage\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
-    <Content Include="Views\PingOne\PingOne.cshtml" />
     <None Include="Properties\PublishProfiles\ade1-svbf01mstrho7y3inte - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ade1-svbf01mstrho7y3inte - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\svbf01mstrho7y3inte - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\svbf01mstrho7y3inte - Web Deploy.pubxml" />
+    <Content Include="Views\PingOne\Success.cshtml" />
+    <Content Include="Views\PingOne\Error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
