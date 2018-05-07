@@ -93,8 +93,8 @@ namespace SSOPOC.Controllers
             {
                 user = new ApplicationUser
                 {
-                    UserName = userData.Username,
-                    Email = $"{Guid.NewGuid()}@episerver.com",
+                    UserName = userData.Email,
+                    Email = userData.Email,
                     IsApproved = true,
                     IsLockedOut = false,
                     CreationDate = DateTime.Now
@@ -104,14 +104,14 @@ namespace SSOPOC.Controllers
                 var createUserResult = await UserManager.CreateAsync(user, "Amer1canDre@m!");
                 if (createUserResult.Succeeded)
                 {
-                    foreach(var role in userData.Roles)
+                    foreach (var role in userData.Roles)
                     {
                         await UserManager.AddToRoleAsync(user.Id, role);
                     }
                     var result = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
                     if (!result.Succeeded)
                     {
-                        foreach(var error in result.Errors)
+                        foreach (var error in result.Errors)
                         {
                             errors.Add(error);
                         }
@@ -126,7 +126,7 @@ namespace SSOPOC.Controllers
                 }
             }
 
-            if(errors.Count == 0)
+            if (errors.Count == 0)
             {
                 await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
                 return View("Success", userData);
@@ -134,7 +134,7 @@ namespace SSOPOC.Controllers
             else
             {
                 ViewBag.Errors = new List<string>();
-                foreach(var error in errors)
+                foreach (var error in errors)
                 {
                     ViewBag.Erros.Add(error);
                 }
@@ -164,7 +164,7 @@ namespace SSOPOC.Controllers
         {
             var rolePrefix = "DELG-Episerver-";
             var userData = new ClaimUserData();
-            userData.Username = loginInfo.Login.ProviderKey;
+            userData.ProviderKey = loginInfo.Login.ProviderKey;
             userData.Roles = new List<string>();
             foreach (var claim in loginInfo.ExternalIdentity?.Claims)
             {
@@ -172,6 +172,18 @@ namespace SSOPOC.Controllers
                 {
                     var roleName = claim.Value.Remove(0, rolePrefix.Count());
                     userData.Roles.Add(roleName);
+                }
+                if (claim.Type.ToLower() == "email address")
+                {
+                    userData.Email = claim.Value;
+                }
+                if (claim.Type.ToLower() == "first name")
+                {
+                    userData.Firstname = claim.Value;
+                }
+                if (claim.Type.ToLower() == "last name")
+                {
+                    userData.Lastname = claim.Value;
                 }
             }
             return userData;

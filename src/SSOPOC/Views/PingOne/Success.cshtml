@@ -12,7 +12,8 @@
 </head>
 <body>
     <div>
-        <h1>Welcome back @Model.Username!</h1>
+        <h1>Welcome back @Model.Firstname @Model.Lastname!</h1>
+        <h3>Username: @Model.Email</h3>
         <h3>Your have the following roles</h3>
         <ol>
             @foreach(var role in Model.Roles)
