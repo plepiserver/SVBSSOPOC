@@ -66,7 +66,18 @@ namespace SSOPOC.Controllers
 
         public ActionResult Index()
         {
+            var context = ControllerContext.HttpContext;
+            if (context.User != null && context.User.Identity != null && context.User.Identity.IsAuthenticated)
+            {
+                //User is authenticated and they don't have access so redirect to not authorised page
+                return new RedirectResult("Login/UnAuthorised");
+            }
             return View("/Views/Login/Index.cshtml");
+        }
+
+        public ActionResult UnAuthorised()
+        {
+            return View("/Views/Login/UnAuthorised.cshtml");
         }
 
         [HttpPost]

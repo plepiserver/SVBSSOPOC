@@ -577,6 +577,7 @@
     <None Include="Properties\PublishProfiles\svbf01mstrho7y3inte - Web Deploy.pubxml" />
     <Content Include="Views\PingOne\Success.cshtml" />
     <Content Include="Views\PingOne\Error.cshtml" />
+    <Content Include="Views\Login\UnAuthorised.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
