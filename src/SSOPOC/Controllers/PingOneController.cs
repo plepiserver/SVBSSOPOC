@@ -18,10 +18,6 @@ namespace SSOPOC.Controllers
 {
     public class PingOneController : Controller
     {
-        private UIUserProvider _UIUserProvider => ServiceLocator.Current.GetInstance<UIUserProvider>();
-        private UISignInManager _UISignInManager => ServiceLocator.Current.GetInstance<UISignInManager>();
-        private UIRoleProvider _UIRoleProvider => ServiceLocator.Current.GetInstance<UIRoleProvider>();
-
         private ApplicationDbContext _context;
         public ApplicationDbContext ApplicationDbContext
         {
@@ -70,6 +66,14 @@ namespace SSOPOC.Controllers
             return View();
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult SSOInitiated(string returnUrl)
+        {
+            // Request a redirect to the external login provider
+            return new ChallengeResult("Saml2", Url.Action("AuthenticateCallBack", "PingOne", new { ReturnUrl = returnUrl }));
+        }
+
         [HttpPost]
         [AllowAnonymous]
         public ActionResult SSOLogin(string returnUrl)
@@ -100,8 +104,7 @@ namespace SSOPOC.Controllers
                     CreationDate = DateTime.Now
                 };
 
-                //var createUserResult = await UserManager.CreateAsync(user, Membership.GeneratePassword(12, 6));
-                var createUserResult = await UserManager.CreateAsync(user, "Amer1canDre@m!");
+                var createUserResult = await UserManager.CreateAsync(user, Membership.GeneratePassword(12, 6));
                 if (createUserResult.Succeeded)
                 {
                     foreach (var role in userData.Roles)
