@@ -391,6 +391,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Global.cs" />
+    <Compile Include="Helpers\ApplicationDbContext.cs" />
     <Compile Include="Helpers\ApplicationSignInManager.cs" />
     <Compile Include="Helpers\ApplicationUser.cs" />
     <Compile Include="Helpers\ApplicationUserManager.cs" />
