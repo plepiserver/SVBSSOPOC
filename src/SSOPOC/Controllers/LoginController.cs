@@ -70,7 +70,7 @@ namespace SSOPOC.Controllers
             if (context.User != null && context.User.Identity != null && context.User.Identity.IsAuthenticated)
             {
                 //User is authenticated and they don't have access so redirect to not authorised page
-                return new RedirectResult("Login/UnAuthorised");
+                return new RedirectResult("Login/UnAuthorized");
             }
             return View("/Views/Login/Index.cshtml");
         }
