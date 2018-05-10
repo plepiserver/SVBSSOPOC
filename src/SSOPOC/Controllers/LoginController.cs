@@ -69,15 +69,14 @@ namespace SSOPOC.Controllers
             var context = ControllerContext.HttpContext;
             if (context.User != null && context.User.Identity != null && context.User.Identity.IsAuthenticated)
             {
-                //User is authenticated and they don't have access so redirect to not authorised page
                 return new RedirectResult("Login/UnAuthorized");
             }
             return View("/Views/Login/Index.cshtml");
         }
 
-        public ActionResult UnAuthorised()
+        public ActionResult UnAuthorized()
         {
-            return View("/Views/Login/UnAuthorised.cshtml");
+            return View("/Views/Login/UnAuthorized.cshtml");
         }
 
         [HttpPost]
@@ -97,20 +96,6 @@ namespace SSOPOC.Controllers
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("LoginError", "Login failed");
             return View("/Views/Login/Index.cshtml", model);
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        [ValidateInput(false)]
-        public ActionResult AdfsLogin(string returnUrl)
-        {
-            if (ModelState.IsValid)
-            {
-                var properties = new AuthenticationProperties { RedirectUri = returnUrl };
-                HttpContext.GetOwinContext().Authentication.Challenge(properties, WsFederationAuthenticationDefaults.AuthenticationType);
-            }
-            return View("/Views/Login/Index.cshtml");
         }
     }
 }
